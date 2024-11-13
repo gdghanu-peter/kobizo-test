@@ -1,9 +1,9 @@
 <template>
-  <Breadcrumb class="text-gray-500" :model="breadcrumbItems">
+  <Breadcrumb class="text-gray-500 text-xl" :model="breadcrumbItems">
     <template #item="{ item }">
       <router-link v-slot="{ href }" :to="item.route" custom>
         <NuxtLink :to="href">
-          <span class="text-primary font-semibold">{{ item.label }}</span>
+          <span class="text-primary font-semibold hover:text-green-500">{{ item.label }}</span>
         </NuxtLink>
       </router-link>
     </template>
@@ -15,7 +15,7 @@
     <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
       {{ postsStore.postDetail.title }}
     </h1>
-    <div class="flex mb-4 items-center">
+    <div class="flex mb-6 items-center">
       <Avatar
         :image="postsStore.postDetail.created_by.avatar"
         class="mr-2"
@@ -33,8 +33,12 @@
     </div>
     <div v-html="postsStore.postDetail.body"></div>
   </div>
-  <div v-else class="flex justify-center h-[80vh] items-center">
+  <div v-else-if="!isError" class="flex justify-center h-[80vh] items-center">
     <ProgressSpinner aria-label="Loading" />
+  </div>
+  <div class="text-3xl flex justify-center h-[80vh] items-center" v-else>
+    Fetch Data Fail <br> 
+    Message: {{ error?.message }} <br>
   </div>
 </template>
 
