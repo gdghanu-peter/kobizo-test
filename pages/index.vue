@@ -8,7 +8,7 @@
     Read the latest news about all solutions, from framework announcements to
     integration tutorials.
   </div>
-  <div v-if="!isLoading">
+  <div v-if="!postsStore.isLoading">
     <div
       class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 items-center mb-4"
     >
@@ -42,12 +42,12 @@
       @page="onPageChange"
     />
   </div>
-  <div v-else-if="!isError" class="flex justify-center h-[80vh] items-center">
-    <ProgressSpinner v-if="!isError" aria-label="Loading" />
+  <div v-else-if="!postsStore.isError" class="flex justify-center h-[80vh] items-center">
+    <ProgressSpinner aria-label="Loading" />
   </div>
   <div class="text-3xl flex justify-center h-[80vh] items-center" v-else>
     Fetch Data Fail <br> 
-    Message: {{ error?.message }} <br>
+    Message: {{ postsStore.error?.message }} <br>
   </div>
 </template>
 <script setup lang="ts">
@@ -70,6 +70,17 @@ watch(data, (newData) => {
   }
 });
 
+watch(isError, (errorState) => {
+    postsStore.setIsError(errorState);
+});
+watch(isLoading, (loadingState) => {
+    postsStore.setIsLoading(loadingState);
+});
+watch(error, (newError) => {
+  if (newError) {
+    postsStore.setError(newError);
+  }
+});
 const onPageChange = (event: PageState) => {
   postsStore.setPage(event.page + 1);
   queryClient.invalidateQueries({ queryKey: ["posts"] });

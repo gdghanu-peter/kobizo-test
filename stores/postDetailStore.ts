@@ -1,17 +1,13 @@
 import type { Post } from "~/types/post";
 
-export const usePostsStore = defineStore("posts", () => {
-  const currentPage = ref<number>(1);
-  const posts = ref<Post[]>([]);
+export const usePostDetailStore = defineStore("detailPost", () => {
   const isError = ref<boolean>(false)
   const isLoading = ref<boolean>(true)
+  const postDetail = ref<Post>();
   const error =ref<Error>()
-  const setPage = (page: number) => {
-    currentPage.value = page;
-  };
 
-  const setPosts = (newPosts: Post[]) => {
-    posts.value = newPosts;
+  const setPostDetail = (newPosts: Post) => {
+    postDetail.value = newPosts;
   };
 
   const setIsError = (errorState: boolean) => {
@@ -23,5 +19,5 @@ export const usePostsStore = defineStore("posts", () => {
   const setError = (newError: Error) => {
     error.value = newError
   }
-  return { currentPage, posts, isError, isLoading, error, setPage, setPosts , setIsError, setIsLoading, setError};
+  return { postDetail, isError, isLoading, error, setPostDetail, setIsError ,setIsLoading, setError };
 });
