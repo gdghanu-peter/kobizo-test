@@ -16,7 +16,9 @@ const { data, isLoading, isError, error } = useQuery({
 
 watch(data, (newData) => {
   if (newData) {
+    setSeoMetadata(newData)
     postDetailStore.setPostDetail(newData);
+    
   }
 });
 watch(isError, (errorState) => {
@@ -31,27 +33,29 @@ watch(error, (newError) => {
   }
 });
 
+const setSeoMetadata = (post: Post) => {
   useHead({
-    title: data.title,
+    title: post.title,
     meta: [
-      { name: "description", content: data.body.slice(0, 150) + "..." },
+      { name: "description", content: post.body.slice(0, 150) + "..." },
       {
         name: "keywords",
         content:
-          data.title +
+          post.title +
           ", blog, " +
-          data.created_by.first_name +
+          post.created_by.first_name +
           " " +
-          data.created_by.last_name,
+          post.created_by.last_name,
       },
       {
         name: "author",
-        content: `${data.created_by.first_name} ${data.created_by.last_name}`,
+        content: `${post.created_by.first_name} ${post.created_by.last_name}`,
       },
-      { property: "og:title", content: data.title },
-      { property: "og:description", content: data.body.slice(0, 150) + "..." },
+      { property: "og:title", content: post.title },
+      { property: "og:description", content: post.body.slice(0, 150) + "..." },
       { property: "og:type", content: "article" },
-      { property: "og:image", content: data.created_by.avatar },
+      { property: "og:image", content: post.created_by.avatar },
     ],
   });
+};
 </script>
