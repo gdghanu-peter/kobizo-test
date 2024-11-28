@@ -17,7 +17,6 @@ const { data, isLoading, isError, error } = useQuery({
 watch(data, (newData) => {
   if (newData) {
     postDetailStore.setPostDetail(newData);
-    setSeoMetadata(newData);
   }
 });
 watch(isError, (errorState) => {
@@ -32,7 +31,6 @@ watch(error, (newError) => {
   }
 });
 
-const setSeoMetadata = (post: Post) => {
   useHead({
     title: post.title,
     meta: [
@@ -56,5 +54,4 @@ const setSeoMetadata = (post: Post) => {
       { property: "og:image", content: post.created_by.avatar },
     ],
   });
-};
 </script>
