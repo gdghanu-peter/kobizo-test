@@ -32,26 +32,26 @@ watch(error, (newError) => {
 });
 
   useHead({
-    title: post.title,
+    title: data.title,
     meta: [
-      { name: "description", content: post.body.slice(0, 150) + "..." },
+      { name: "description", content: data.body.slice(0, 150) + "..." },
       {
         name: "keywords",
         content:
-          post.title +
+          data.title +
           ", blog, " +
-          post.created_by.first_name +
+          data.created_by.first_name +
           " " +
-          post.created_by.last_name,
+          data.created_by.last_name,
       },
       {
         name: "author",
-        content: `${post.created_by.first_name} ${post.created_by.last_name}`,
+        content: `${data.created_by.first_name} ${data.created_by.last_name}`,
       },
-      { property: "og:title", content: post.title },
-      { property: "og:description", content: post.body.slice(0, 150) + "..." },
+      { property: "og:title", content: data.title },
+      { property: "og:description", content: data.body.slice(0, 150) + "..." },
       { property: "og:type", content: "article" },
-      { property: "og:image", content: post.created_by.avatar },
+      { property: "og:image", content: data.created_by.avatar },
     ],
   });
 </script>
